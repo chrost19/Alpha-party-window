@@ -1,0 +1,5 @@
+{
+  "version": "1.0-alpha",
+  "min_api": 9,
+  "changelog": "Initial release with auto-update and crash recovery support."
+}
