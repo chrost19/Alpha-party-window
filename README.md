@@ -60,7 +60,7 @@ There are **3 ways** to install. Pick whichever is easiest for you.
 8. Paste this command and press **Enter:**
 
 ```python
-import urllib.request,os,babase,_babase; exec(urllib.request.urlopen("https://raw.githubusercontent.com/chrost19/alpha-party-window/main/install.py").read().decode())
+import urllib.request,os,babase,_babase; exec(urllib.request.urlopen("https://raw.githubusercontent.com/chrosticey/alpha-party-window/main/install.py").read().decode())
 ```
 
 9. Wait for the **"Installed! Please restart"** message on screen
