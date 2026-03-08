@@ -279,7 +279,7 @@ RecordFilesDir = os.path.join(_babase.env()["python_directory_user"], "Configs" 
 if not os.path.exists(RecordFilesDir):
     os.makedirs(RecordFilesDir)
 
-version_str = "1.0-alpha"
+version_str = "1.1-alpha"
 
 Current_Lang = None
 
