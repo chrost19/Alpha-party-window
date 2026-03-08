@@ -8,7 +8,7 @@ An upgraded version of Advanced Party Window
 with ban, mute, complaint system, saved servers,
 reply, kickvote disable and more.
 
-Version : 1.0-alpha
+Version : 1.1-alpha
 API     : 9
 
 Discord : https://discord.gg/9UTCRTnSYt
@@ -47,7 +47,7 @@ import urllib.request
 import urllib.parse
 from _thread import start_new_thread
 import threading
-version_str = "1.0-alpha"
+version_str = "1.1-alpha"
 # ── Auto-update / crash-recovery config ───────────────────────────────────────
 APW_GITHUB_RAW   = "https://raw.githubusercontent.com/chrosticey/alpha-party-window/main"
 APW_VERSION_URL  = APW_GITHUB_RAW + "/version.json"
@@ -736,7 +736,7 @@ class AlphaPartyWindow(bui.Window):
         if True:  # always show chat in partywindow
             msgs = bs.get_chat_messages()
             for msg in msgs:
-                self._add_msg(msg)
+                self._add_msg(msg, ignore_mute=True)
                 # print(msg)
         # else:
         #   msgs=_babase.get_chat_messages()
@@ -934,13 +934,22 @@ class AlphaPartyWindow(bui.Window):
         global muted_chat_names
         if not muted_chat_names:
             return False
-        # Chat messages are formatted as "PlayerName: message"
         sender = msg.split(':', 1)[0].strip()
-        return sender in muted_chat_names
+        def _clean(s):
+            result = ''
+            for ch in s:
+                if not ('\ue000' <= ch <= '\uf8ff'):
+                    result += ch
+            return result.strip().strip("'")
+        sender_clean = _clean(sender)
+        for muted in muted_chat_names:
+            if sender_clean == _clean(muted):
+                return True
+        return False
 
-    def _add_msg(self, msg: str) -> None:
+    def _add_msg(self, msg: str, ignore_mute: bool = False) -> None:
         try:
-            if self._is_msg_muted(msg):
+            if not ignore_mute and self._is_msg_muted(msg):
                 return
             showMute = babase.app.config.resolve('Chat Muted')
             txt = bui.textwidget(parent=self._columnwidget,
